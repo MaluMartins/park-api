@@ -2,8 +2,7 @@ package com.curso.parkapi.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import javax.management.relation.Role;
+import java.util.Objects;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -45,4 +44,28 @@ public class Usuario implements Serializable {
 	public enum Role {
 		ROLE_ADMIN, ROLE_CLIENT
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + "]";
+	}
+	
+	
 }

@@ -27,9 +27,16 @@ public class UsuarioService {
 	}
 
 	@Transactional
-	public Usuario editarSenha(Long id, String password) {
+	public Usuario editarSenha(Long id, String senhaAtual, String novaSenha, String confirmaSenha) {
+		if (!novaSenha.equals(confirmaSenha)) {
+			throw new RuntimeException("As senhas devem ser iguais.");
+		}
+		
 		Usuario user = buscarPorId(id);
-		user.setPassword(password);
+		if (!user.getPassword().equals(senhaAtual)) {
+			throw new RuntimeException("A senha digitada não confere com a senha cadastrada.");
+		}
+		user.setPassword(novaSenha);
 		return user;
 	}
 

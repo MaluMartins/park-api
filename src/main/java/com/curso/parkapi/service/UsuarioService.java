@@ -3,7 +3,9 @@ package com.curso.parkapi.service;
 import org.springframework.stereotype.Service;
 
 import com.curso.parkapi.entities.Usuario;
+import com.curso.parkapi.exception.UsernameUniqueViolationException;
 import com.curso.parkapi.repositories.UsuarioRepository;
+import com.curso.parkapi.exception.EntityNotFoundException;
 import java.util.List;
 
 import jakarta.transaction.Transactional;
@@ -16,13 +18,18 @@ public class UsuarioService {
 	
 	@Transactional
 	public Usuario salvar(Usuario usuario) {
-		return usuarioRepository.save(usuario);
+		try {
+			return usuarioRepository.save(usuario);
+		} catch (org.springframework.dao.DataIntegrityViolationException ex) {
+			throw new UsernameUniqueViolationException(String.format("Username %s já cadastrado", usuario.getUsername()));
+		}
+		
 	}
 	
 	@Transactional
 	public Usuario buscarPorId(Long id) {
 		return usuarioRepository.findById(id).orElseThrow(
-					() -> new RuntimeException("Usuário não encontrado")
+					() -> new EntityNotFoundException(String.format("Usuário id = %s não encontrado.", id))
 				);
 	}
 

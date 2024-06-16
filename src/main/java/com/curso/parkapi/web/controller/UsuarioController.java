@@ -18,11 +18,13 @@ import com.curso.parkapi.web.dto.UsuarioResponseDto;
 import com.curso.parkapi.web.dto.UsuarioSenhaDto;
 import com.curso.parkapi.web.dto.mapper.UsuarioMapper;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@Tag(name = "Usuarios", description = "Contém todas as operações relativas aos recursos para cadastro, edição e leitura de um usuário")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("api/v1/usuarios")
